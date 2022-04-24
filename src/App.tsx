@@ -1,24 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import axios from 'axios'
 
-function App() {
+
+function App() {  
+  const [notesList,setNotes]=useState<Array<any>>([])
+  //  let notesList :any[]=[]
+  const getNotes= async ()=>{
+    // console.log("we are awesome ") 
+    try{
+      const response=await axios.get(
+        'http://localhost:5000/notes'
+      )  
+      setNotes(response.data.notes)
+      console.log(notesList);
+      
+    }catch(error){
+      console.error(error)
+    }
+  }
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <div>Notes  Applications </div>
+       <div>
+         <button onClick={getNotes} >Click me !</button> 
+         <div>
+          
+          {
+            // show details for first element  
+            
+          }
+          <h4>{notesList[0]?.text}</h4>
+          <h4>{notesList[0]?.link}</h4>
+         </div>
+       </div>
+    
     </div>
   );
 }
